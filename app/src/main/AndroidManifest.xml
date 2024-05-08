@@ -16,7 +16,7 @@
         android:theme="@style/Theme._15AndroidKotlinMaps"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true" >
 
             <intent-filter>
@@ -42,7 +42,7 @@
             android:value="AIzaSyDuczObt2DBDCaTiMLFW_uebG_ejIaiV4E" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".view.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
 

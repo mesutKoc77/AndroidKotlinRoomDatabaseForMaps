@@ -1,5 +1,6 @@
-package com.name.a15androidkotlinmaps
+package com.name.a15androidkotlinmaps.view
 
+import PlaceDatabase
 import android.Manifest
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.room.Room
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -22,8 +24,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.name.a15androidkotlinmaps.R
 import com.name.a15androidkotlinmaps.databinding.ActivityMapsBinding
 import com.name.a15androidkotlinmaps.model.Place
+import com.name.a15androidkotlinmaps.roomdb.PlaceDao
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapLongClickListener{
 
@@ -36,6 +40,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapLo
     private var trackBoolean: Boolean?=null
     private var selectedLatitude: Double? = null
     private var selectedLongitude: Double? = null
+
+    private lateinit var db: PlaceDatabase
+    private lateinit var placeDao: PlaceDao
+
+
 
 
 
@@ -58,10 +67,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapLo
         selectedLatitude=0.0
         selectedLongitude=0.0
 
-
-
-
-
+        db=Room.databaseBuilder(applicationContext,PlaceDatabase::class.java,"Places").build()
+        placeDao=db.placeDao()
 
     }
 
@@ -156,6 +163,55 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnMapLo
     }
 
     fun save (view : View) {
+
+        if (selectedLongitude!=null && selectedLatitude!=null){
+            val place=Place(binding.placeText.text.toString(),selectedLatitude!!,selectedLongitude!!)
+            placeDao.insert(place)
+
+
+        } else {
+            Toast.makeText(this, "Seçilen konum bulunamadı", Toast.LENGTH_SHORT).show()
+        }
+
+
+
+        /*
+        if (selectedLatitude!= null) {
+    // selectedLatitude değişkeni null değilse işlemleri gerçekleştir
+} else {
+    // selectedLatitude değişkeni null ise kullanıcıya bir uyarı göster
+    Toast.makeText(context, "Seçilen konum bulunamadı", Toast.LENGTH_SHORT).show()
+}
+         */
+
+        /*
+        if (selectedLatitude!= null) {
+    // selectedLatitude değişkeni null değilse işlemleri gerçekleştir
+} else {
+    // selectedLatitude değişkeni null ise loglama yap
+    Log.e(TAG, "Seçilen konum null olduğu için işlem yapılamadı")
+}
+
+         */
+
+        /*
+        if (selectedLatitude != null) {
+    // selectedLatitude değişkeni null değilse işlemleri gerçekleştir
+} else {
+    // selectedLatitude değişkeni null ise alternatif bir ekran aç
+    val intent = Intent(context, AlternatifActivity::class.java)
+    startActivity(intent)
+}
+
+         */
+
+        //ELvis Operatoru ile
+        /*
+        val latitude = selectedLatitude ?: DEFAULT_LATITUDE
+val longitude = selectedLongitude ?: DEFAULT_LONGITUDE
+val place = Place(binding.placeText.text.toString(), latitude!!, longitude!!)
+
+         */
 
 
     }
