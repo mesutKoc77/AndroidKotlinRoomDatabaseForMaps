@@ -1,3 +1,4 @@
+package com.name.a15androidkotlinmaps.roomdb
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.name.a15androidkotlinmaps.model.Place

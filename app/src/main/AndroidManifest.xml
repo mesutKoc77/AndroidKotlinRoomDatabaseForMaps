@@ -45,8 +45,10 @@
             android:name=".view.MapsActivity"
             android:exported="true"
             android:label="@string/title_activity_maps">
-
         </activity>
+
+
+
     </application>
 
 </manifest>
